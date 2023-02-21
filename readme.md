@@ -30,10 +30,14 @@ Standalone:
 cargo run [--release]
 ```
 
-To view:
+### To view:
+
 As an azure function:
+
 http://localhost:7071/api/HttpExample
+
 Standalone:
+
 http://localhost:3000/api/HttpExample
 
 Uses the warp crate to handle http requests, with accompanying host.json to allow the output executable to be used as a handler for an azure function
