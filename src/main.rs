@@ -12,6 +12,8 @@ async fn main() {
     // The default response is "not found" when no route matches any of our filters.
     // The below example creates a route that listens to http://localhost:[port]/api/HttpExample
     
+    let catch_all = warp::get().map(|| Response::builder().status(404).header("Content-Type", "text/plain").body(String::from("Route not supported")));
+
     // warp::get() initialises the route as get only filter
     let example_route = warp::get()
         // we build the route for the request by adding paths to the filter
@@ -39,5 +41,8 @@ async fn main() {
         Err(_) => 3000,
     };
 
-    warp::serve(example_route).run((Ipv4Addr::LOCALHOST, port)).await
+    let routes = example_route
+        .or(catch_all);
+
+    warp::serve(routes).run((Ipv4Addr::LOCALHOST, port)).await
 }
